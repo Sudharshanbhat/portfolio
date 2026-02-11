@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudarshan Bhat | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'Poppins',sans-serif;
+        scroll-behavior:smooth;
+    }
+
+    body{
+        background:#f7fbff;
+        color:#222;
+    }
+
+    section{
+        padding:80px 10%;
+    }
+
+    /* HERO */
+    .hero{
+        height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        flex-wrap:wrap;
+    }
+
+    .hero img{
+        width:280px;
+        border-radius:25px;
+        filter:grayscale(100%);
+        box-shadow:0 20px 40px rgba(0,119,255,0.2);
+        animation:float 4s ease-in-out infinite;
+        border:6px solid white;
+    }
+
+    @keyframes float{
+        0%{transform:translateY(0);} 
+        50%{transform:translateY(-15px);} 
+        100%{transform:translateY(0);} 
+    }
+
+    .hero-text{
+        max-width:550px;
+    }
+
+    h1{
+        font-size:3rem;
+        margin-bottom:10px;
+        color:#0077ff;
+    }
+
+    h2{
+        font-weight:400;
+        color:#ff7a00;
+        margin-bottom:20px;
+    }
+
+    .btn{
+        padding:14px 30px;
+        border:none;
+        border-radius:10px;
+        background:linear-gradient(135deg,#0077ff,#ff7a00);
+        color:#fff;
+        cursor:pointer;
+        transition:.3s;
+        font-weight:600;
+        box-shadow:0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn:hover{
+        transform:scale(1.07);
+    }
+
+    /* SKILLS */
+    .skills{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+        gap:25px;
+        margin-top:40px;
+    }
+
+    .card{
+        padding:25px;
+        border-radius:18px;
+        background:white;
+        box-shadow:0 10px 25px rgba(0,119,255,0.08);
+        transition:.35s;
+        border-top:5px solid #0077ff;
+    }
+
+    .card:nth-child(even){
+        border-top:5px solid #ff7a00;
+    }
+
+    .card:hover{
+        transform:translateY(-10px);
+        box-shadow:0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    /* PROJECTS */
+    .projects{
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+        gap:25px;
+        margin-top:40px;
+    }
+
+    .project-box{
+        height:190px;
+        border-radius:20px;
+        background:linear-gradient(135deg,#0077ff,#ff7a00);
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+        font-weight:600;
+        color:white;
+        transition:.4s;
+        box-shadow:0 10px 30px rgba(0,0,0,0.15);
+        cursor:pointer;
+        text-align:center;
+    }
+
+    .project-box:hover{
+        transform:scale(1.06);
+    }
+
+    .project-box.empty{
+        background:linear-gradient(135deg,#e0e0e0,#c0c0c0);
+        color:#666;
+        cursor:default;
+    }
+
+    .project-box.empty:hover{
+        transform:none;
+    }
+
+    /* Modal */
+    .modal{
+        display:none;
+        position:fixed;
+        z-index:1000;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.8);
+        align-items:center;
+        justify-content:center;
+    }
+
+    .modal-content{
+        background:white;
+        padding:40px;
+        border-radius:20px;
+        max-width:600px;
+        max-height:80vh;
+        overflow-y:auto;
+        position:relative;
+    }
+
+    .close-modal{
+        position:absolute;
+        top:15px;
+        right:20px;
+        font-size:2rem;
+        cursor:pointer;
+        color:#666;
+    }
+
+    .close-modal:hover{
+        color:#0077ff;
+    }
+
+    .modal-content img{
+        width:100%;
+        border-radius:15px;
+        margin-bottom:20px;
+    }
+
+    /* CONTACT */
+    .contact a{
+        display:inline-block;
+        margin:12px 18px 0 0;
+        text-decoration:none;
+        color:white;
+        font-weight:500;
+        transition:.3s;
+        background:linear-gradient(135deg,#0f1113);
+        padding:10px 18px;
+        border-radius:8px;
+    }
+
+    .contact a:hover{
+        transform:translateY(-3px);
+    }
+
+    footer{
+        text-align:center;
+        padding:30px;
+        color:#777;
+        font-size:.9rem;
+    }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <img src="{% static 'ho.jpg.png' %}" alt="Sudarshan Bhat">
+
+    <div class="hero-text">
+        <h1>Sudarshan Bhat</h1>
+        <h2>Full Stack Developer | Engineering Student</h2>
+        <p>I build modern web applications with clean design, strong backend systems, and scalable databases. Available for freelance projects and collaborations.</p>
+        <br>
+        <button class="btn" onclick="document.getElementById('contact').scrollIntoView()">Hire Me</button>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section>
+    <h1>Skills & Services</h1>
+
+    <div class="skills">
+        {% for skill in skills %}
+        <div class="card">
+            <h3>{{ skill.title }}</h3>
+            <p>{{ skill.description }}</p>
+        </div>
+        {% empty %}
+        <p>No skills added yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section>
+    <h1>Projects</h1>
+    <p>Showcasing some of my work. More coming soon!</p>
+
+    <div class="projects">
+        {% for project in projects %}
+        <div class="project-box" onclick="openModal('modal{{ project.id }}')">
+            <strong style="font-size:1.1rem;">{{ project.title }}</strong>
+            <p style="font-size:0.85rem; margin-top:10px; font-weight:400;">Click to view details</p>
+        </div>
+
+        <!-- Modal for each project -->
+        <div id="modal{{ project.id }}" class="modal" onclick="if(event.target == this) closeModal('modal{{ project.id }}')">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('modal{{ project.id }}')">&times;</span>
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                {% endif %}
+                <h2 style="color:#0077ff; margin-bottom:15px;">{{ project.title }}</h2>
+                <p style="color:#333; line-height:1.6; margin-bottom:20px;">{{ project.description }}</p>
+                {% if project.url %}
+                <a href="{{ project.url }}" target="_blank" class="btn">Visit Project</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="project-box empty">
+            <strong>Coming Soon</strong>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<script>
+function openModal(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+</script>
+
+<!-- CONTACT -->
+<section id="contact">
+    <h1 style="color:#0077ff;">Contact Me</h1>
+    <p>Let's build something great together.</p>
+
+    <form method="POST" style="max-width:500px; margin:30px 0;">
+        {% csrf_token %}
+        <div style="margin-bottom:15px;">
+            {{ form.name }}
+            <style>
+                input[type="text"], input[type="email"], textarea {
+                    width: 100%;
+                    padding: 12px;
+                    margin-top: 5px;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    font-family: 'Poppins', sans-serif;
+                }
+            </style>
+        </div>
+        <div style="margin-bottom:15px;">
+            {{ form.email }}
+        </div>
+        <div style="margin-bottom:15px;">
+            {{ form.subject }}
+        </div>
+        <div style="margin-bottom:15px;">
+            {{ form.message }}
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+    </form>
+
+    <div class="contact" style="margin-top:40px;">
+        <h3>Or connect with me on:</h3>
+        <p style="color:#0077ff; font-size:1.2rem; margin:15px 0;">📞 Contact: <strong>7483659807</strong></p>
+        <a href="https://wa.me/917483659807" target="_blank">WhatsApp</a>
+        <a href="tel:7483659807">Call Me</a>
+        <a href="https://instagram.com/sudharshandevas" target="_blank">Instagram</a>
+        <a href="https://github.com/Sudharshanbhat" target="_blank">GitHub</a>
+        <a href="#">LinkedIn</a>
+    </div>
+</section>
+
+<footer>
+    © 2026 Sudarshan Bhat. All rights reserved.
+</footer>
+
+</body>
+</html>
