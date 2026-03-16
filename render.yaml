@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: sudharshanbhat-portfolio
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn porfolio.wsgi --bind 0.0.0.0:$PORT --workers 2"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "sudharshanbhat.com,www.sudharshanbhat.com"
+      - key: DJANGO_CSRF_TRUSTED_ORIGINS
+        value: "https://sudharshanbhat.com,https://www.sudharshanbhat.com"
+      - key: DJANGO_SECURE_SSL_REDIRECT
+        value: "True"
+      - key: DJANGO_SECURE_HSTS_SECONDS
+        value: "31536000"
+      - key: DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS
+        value: "True"
+      - key: DJANGO_SECURE_HSTS_PRELOAD
+        value: "True"
